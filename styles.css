@@ -1,0 +1,25 @@
+.button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  .data-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+  }
+  h1 {
+    margin-top: 0;
+  }
+  #nombre-cliente,
+  #categoria-llamada,
+  #opcion-llamada,
+  #subopcion-llamada,
+  #validaciones,
+  #respuesta-validaciones {
+    margin-bottom: 10px;
+  }
+  

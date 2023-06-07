@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Pantalla Operador</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <div id="container">
+    <h1>Pantalla para registrar respuesta de operador</h1>
+    <h2>Datos de la llamada del cliente</h2>
+
+    <button id="api-button">Obtener datos llamada</button>
+
+    <div id="datos-llamada" style="display: none;">
+      <div id="nombre-cliente"></div>
+      <div id="categoria-llamada"></div>
+      <div id="opcion-llamada"></div>
+      <div id="subopcion-llamada"></div>
+      <div id="validaciones-list"></div>
+
+      <button id="validaciones-button">Ingresar respuestas a las validaciones</button>
+    </div>
+
+    <div id="respuestas-validaciones" style="display: none;">
+      <h2>Respuestas a las validaciones</h2>
+      <form id="respuestas-form">
+      
+      </form>
+      <button id="respuestas-button">Enviar respuestas</button>
+    </div>
+    
+    <div id="acciones" style="display: none;">
+      <h7>Ingrese descripcion del problema del cliente</h7>
+      <input type="text" id="descripcionOperador">
+      <button id="accion">Mandar accion</button>
+    </div>
+
+    <div id="confirmacion" style="display: none;">
+      <p id="respuesta-accion"></p>
+      <button id="confirmar-accion">Confirmar</button>
+      <p id="respuesta-confirmacion"></p>
+
+    </div>
+
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
