@@ -142,13 +142,13 @@ function mostrarValidaciones(){
   divValidaciones.style.display = 'block';
   const formValidaciones = document.getElementById('respuestas-form');
   pantallaRespuestaOperador.getValidacionesSubopcion().forEach(validacion =>{
-
     const label = document.createElement('label');
     label.textContent = `Respuesta para ${validacion.nombre}: `;
     formValidaciones.appendChild(label);
 
     const input = document.createElement('input');
     input.type = 'text';
+    input.setAttribute('id', validacion.nombre.replace(/\s+/g, '-').toLowerCase());
     formValidaciones.appendChild(input);
 
     formValidaciones.appendChild(document.createElement('br'));
@@ -161,19 +161,19 @@ function mostrarValidaciones(){
 
 function tomarRespuestaCliente(){
   const validarButton = document.getElementById('respuestas-button');
-  validarButton.style.display = 'none';
-
-  const respuestasForm = document.getElementById('respuestas-form');
-  const inputs = respuestasForm.querySelectorAll('input');
-  const respuestas = [];
-  inputs.forEach(input => {
-    const respuesta = input.value;
-    respuestas.push(respuesta);
-  });
-  console.log(respuestas);
+  
   try{
-    if(respuestas.length === pantallaRespuestaOperador.getValidacionesSubopcion().length){
+    if(validarIngresoOperador()){
       const url = 'http://localhost:8080/api/cu17/validar';
+      const respuestas = [];
+      const respuestasForm = document.getElementById('respuestas-form');
+
+      const inputs = respuestasForm.querySelectorAll('input');
+      inputs.forEach(input => {
+        const respuesta = input.value;
+        respuestas.push(respuesta);
+      });
+      console.log(`Una de las respuestas: ${respuestas}`);
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -183,8 +183,20 @@ function tomarRespuestaCliente(){
       fetch(url, requestOptions)
         .then(response => response.json())
         .then(data => {
-          pantallaRespuestaOperador.setDescripcionAccionSeleccionada(data);
-          mostrarAcciones();
+          var objLength = Object.keys(data).length;
+          console.log(`Data como viene en el json: ${data}`);
+          console.log(`Type of: ${typeof(data)}`);
+          console.log(`Length: ${objLength}`);
+          console.log(`JsonStringify: ${JSON.stringify(data)}`);
+
+          if (objLength != 1){
+            validarButton.style.display = 'none';
+            pantallaRespuestaOperador.setDescripcionAccionSeleccionada(data);
+            mostrarAcciones();
+          }
+          else{
+            alert("No se pudo validar el Usuario, vuelva")
+          }
 
         })
         .catch(error => {
@@ -299,5 +311,24 @@ function tomarConfirmacion(){
 function mostrarExitoOperacion(data){
   const finalizar = document.getElementById('respuesta-confirmacion');
   finalizar.textContent = data;
+
+}
+
+function validarIngresoOperador(){
+  var cantidadHijos = document.getElementById('cantidad-de-hijos').value;
+  var codigoPostal = document.getElementById('codigo-postal').value;
+  var nombreMascota = document.getElementById('nombre-de-su-mascota').value;
+
+  console.log(`Respuestas Cantidad de Hijos : ${cantidadHijos}`);
+  console.log(`Respuestas Codigo Postal : ${codigoPostal}`);
+  console.log(`Respuestas Nombre Mascota : ${nombreMascota}`);
+  if(!isNaN(cantidadHijos) && !isNaN(codigoPostal) && isNaN(nombreMascota)){
+    alert('Todo Ok')
+    return true;
+  }
+  else{
+    alert('Todo Mal ingresa bien')
+    return false;
+  }
 
 }
